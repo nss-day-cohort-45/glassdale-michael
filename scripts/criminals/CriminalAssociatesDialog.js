@@ -1,5 +1,5 @@
 /*
- *   Dialog renders a dialog element in the dialogContainer
+ *   CriminalAssociatesDialog renders a dialog element in the dialogContainer
  *   with an unordered list of known associate(s) & alibi(s).
  */
 
@@ -8,8 +8,8 @@ import { useCriminals } from "./criminalsDataProvider.js";
 const eventHub = document.querySelector("#container");
 const targetTargetContainer = document.querySelector("#dialogContainer");
 
-// Dialog renders the dialog element to the DOM for the specific criminal when invoked.
-const Dialog = (criminalObject) => {
+// CriminalAssociatesDialog renders the dialog element to the DOM for the specific criminal when invoked.
+const CriminalAssociatesDialog = (criminalObject) => {
     const [firstName, lastName] = criminalObject.name.split(" ");
     targetTargetContainer.innerHTML = `
         <dialog id="dialog">
@@ -30,7 +30,7 @@ eventHub.addEventListener("assiciatesButtonClicked", e => {
     const criminalsArray = useCriminals();
     const criminalId = parseInt(e.detail.criminal);
     const foundCriminal = criminalsArray.find(c => c.id === criminalId)
-    Dialog(foundCriminal);
+    CriminalAssociatesDialog(foundCriminal);
     const theDialog = document.querySelector("#dialog");
     theDialog.showModal();
 });

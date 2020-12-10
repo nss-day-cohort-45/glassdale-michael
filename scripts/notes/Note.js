@@ -18,7 +18,7 @@ export const Note = (noteObject, criminalObject) => {
         <p class="note__timestamp"><span class="bold">Note Entry Date</span>: ${noteObject.date}</p>
         <p class="note__text">${noteObject.noteText}</p>
 
-        <button id="toggleNote--${noteObject.id}" class="toggleNoteButton">Hide Note</button>
+        <button id="removeNote--${noteObject.id}" class="removeNoteButton">Remove Note from List</button>
         
         <button id="deleteNote--${noteObject.id}" class="deleteNoteButton">Delete Note</button>
 
@@ -29,8 +29,8 @@ export const Note = (noteObject, criminalObject) => {
 
 // Listens for a "click" event and hides a corresponding note.
 contentTargetContainer.addEventListener('click', e => {
-    if (e.target.id.startsWith('toggleNote--')) {
-        e.target.parentElement.classList.add("hidden");
+    if (e.target.id.startsWith('removeNote--')) {
+        e.target.parentElement.remove();
     };
 });
 

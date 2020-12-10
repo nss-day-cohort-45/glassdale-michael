@@ -1,5 +1,5 @@
 /*
- *   FilterCriminalListButton renders a button labeled, Fiter Criminals by Both Options, that 
+ *   CriminalListFilterButton renders a button labeled, Fiter Criminals by Both Options, that 
  *   filters all criminals in the Glassdale PD API via the "filterButtonClicked" custom event.
  */
 
@@ -7,7 +7,7 @@ const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#filterButton");
 
 // Inserts a button, Show All Criminals, onto the DOM in the header element (#headerContainer).
-export const FilterCriminalListButton = () => {
+export const CriminalListFilterButton = () => {
     targetContentContainer.innerHTML = `
     <button id="button--filterCriminalList">Fiter Criminal List by Both Options</button>
     `

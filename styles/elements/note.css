@@ -57,7 +57,7 @@
     text-decoration: underline;
 }
 
-.toggleNoteButton {
+.removeNoteButton {
     bottom: 15px;
     display: inline-block;
     left: 10px;

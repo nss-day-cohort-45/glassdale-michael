@@ -23,7 +23,7 @@ const NoteForm = () => {
     <section id="noteFormContainer">
     <form id="noteForm">
         <label for="note--date">Date:</label>
-        <input type="date" id="note--date"></br>
+        <input type="date" id="note--date" name="note--date"></br>
         <label for="note--suspect">Suspect:</label>
         <select id="note--suspect">
             <option value="0">Please Choose a Criminal...</option>
@@ -54,8 +54,8 @@ export const resetNoteForm = () => {
  *  of the form element (#noteForm) and runs the function saveNote to submit the data. 
 */
 contentTargetElement.addEventListener("click", e => {
-    e.preventDefault();
     if (e.target.id === "saveNote") {
+        e.preventDefault();
         const date = document.getElementById("note--date").value;
         const criminalId = document.getElementById("note--suspect").value;
         const noteText = document.getElementById("note--text").value;

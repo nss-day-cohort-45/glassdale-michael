@@ -4,12 +4,22 @@
 */
 const eventHub = document.querySelector("#container");
 const targetListContainer = document.querySelector("#listContainer");
+const colorArray = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "violet"
+];
 
 // Function, criminal, that accepts an argument, criminalObject, and returns a string of an HTML element.
 export const Criminal = (criminalObject) => {
     const [firstName, lastName] = criminalObject.name.split(" ");
+    let randomColor = Math.floor(Math.random() * 6) + 1;
+
     return `
-    <div id="criminalCard--${criminalObject.id}" class="criminal">
+    <div id="criminalCard--${criminalObject.id}" class="criminal ${colorArray[randomColor - 1]}">
         <h4 id="criminalCard__name"><span class="bold">Name</span>: ${lastName}, ${firstName}</h4>
         <div class="criminalCard__information">
             <p class="information--age"><span class="bold">Age</span>: ${criminalObject.age}</p>
@@ -51,5 +61,5 @@ targetListContainer.addEventListener(
 */
 targetListContainer.addEventListener("click", e => {
     if (e.target.id.startsWith("hideCriminal--"))
-        e.target.parentElement.classList.add("hidden")
+        e.target.parentElement.remove();
 })
