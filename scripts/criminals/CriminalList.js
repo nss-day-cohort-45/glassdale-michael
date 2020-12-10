@@ -1,11 +1,12 @@
-import { useCriminals } from "./criminalsDataProvider.js";
-import { useConvictions } from "../convictions/convictionsDataProvider.js";
-import { Criminal } from "./Criminal.js";
-
 /*
  *   The CriminalList module renders a list of criminal HTML elements to #listContainer, depending
  *   on whether the full array or a filtered array is given as a parameter to the render function.
 */
+
+import { useCriminals } from "./criminalsDataProvider.js";
+import { useConvictions } from "../convictions/convictionsDataProvider.js";
+import { useOfficers } from "../officers/officersDataProvider.js";
+import { Criminal } from "./Criminal.js";
 
 const eventHub = document.querySelector("#container");
 const targetListContainer = document.querySelector("#listContainer");
@@ -30,11 +31,15 @@ const FilteredCriminalList = (filteredArray) => {
 
 /*
  *  Listens for the custom event, criminalListGenerate, to set the container (#listContainer) to empty, 
- *  and invokes the function CriminalList to rerender the full array of criminals to the DOM. 
+ *  invokes the function CriminalList to rerender the full array of criminals to the DOM, and
+ *  resets the officer & conviction select elements to their default value. 
 */
 eventHub.addEventListener("criminalListGenerate", e => {
     CriminalList();
-})
+
+    document.querySelector("#officerSelect").value = "0";
+    document.querySelector("#crimeSelect").value = "0";
+});
 
 /*
  *  Listens for the custom event, crimeSelected, to set the container (#listContainer) to empty, 
@@ -51,5 +56,23 @@ eventHub.addEventListener("crimeSelected", e => {
         const convictionName = appStateConvictions.find(c => c.id === selectedCrimeId).name
         const filteredCriminalArray = appStateCriminals.filter(c => c.conviction === convictionName);
         FilteredCriminalList(filteredCriminalArray);
-    }
-})
+    };
+});
+
+/*
+ *  Listens for the custom event, officerSelected, to set the container (#listContainer) to empty, 
+ *  and invokes the function FilteredCriminalList to render the filtered array of criminals to the DOM. 
+*/
+eventHub.addEventListener("officerSelected", e => {
+    const appStateCriminals = useCriminals();
+    const appStateOfficers = useOfficers();
+    const selectedOfficerId = parseInt(e.detail.key);
+
+    if (selectedOfficerId === 0) {
+        CriminalList();
+    } else {
+        const officerName = appStateOfficers.find(c => c.id === selectedOfficerId).name
+        const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName);
+        FilteredCriminalList(filteredCriminalArray);
+    };
+});
