@@ -1,4 +1,5 @@
 import { useCriminals } from "./criminalsDataProvider.js";
+import { useConvictions } from "../convictions/convictionsDataProvider.js";
 import { Criminal } from "./Criminal.js";
 
 /*
@@ -22,15 +23,33 @@ export const CriminalList = () => {
 }
 
 // Render filtered criminals and dialog elements after filtering with changeConviction or changeOfficer custom event.
-const FilterCriminalList = (filteredArray) => {
+const FilteredCriminalList = (filteredArray) => {
     targetListContainer.innerHTML = "";
     targetListContainer.innerHTML = filteredArray.map(c => Criminal(c)).join("")
 }
 
 /*
  *  Listens for the custom event, criminalListGenerate, to set the container (#listContainer) to empty, 
- *  and invokes the function Criminal List to rerender the full array of criminals to the DOM. 
+ *  and invokes the function CriminalList to rerender the full array of criminals to the DOM. 
 */
-eventHub.addEventListener("criminalListGenerate", event => {
+eventHub.addEventListener("criminalListGenerate", e => {
     CriminalList();
+})
+
+/*
+ *  Listens for the custom event, crimeSelected, to set the container (#listContainer) to empty, 
+ *  and invokes the function FilteredCriminalList to render the filtered array of criminals to the DOM. 
+*/
+eventHub.addEventListener("crimeSelected", e => {
+    const appStateCriminals = useCriminals();
+    const appStateConvictions = useConvictions();
+    const selectedCrimeId = parseInt(e.detail.key);
+
+    if (selectedCrimeId === 0) {
+        CriminalList();
+    } else {
+        const convictionName = appStateConvictions.find(c => c.id === selectedCrimeId).name
+        const filteredCriminalArray = appStateCriminals.filter(c => c.conviction === convictionName);
+        FilteredCriminalList(filteredCriminalArray);
+    }
 })
