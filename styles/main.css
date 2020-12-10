@@ -1,0 +1,26 @@
+@import './elements/criminal.css';
+@import './elements/note.css';
+@import './elements/noteForm.css';
+@import './elements/witness.css';
+@import './elements/filter.css';
+
+/* General Styling */
+.bold {
+    font-weight: bold;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#filters {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.hidden {
+    display: none;
+}
