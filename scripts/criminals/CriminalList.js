@@ -42,6 +42,9 @@ eventHub.addEventListener("criminalListGenerate", e => {
 
     document.querySelector("#officerSelect").value = "0";
     document.querySelector("#crimeSelect").value = "0";
+
+    selectedCrimeIdState = null;
+    selectedOfficerIdState = null;
 });
 
 /*
