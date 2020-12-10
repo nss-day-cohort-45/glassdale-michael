@@ -90,12 +90,14 @@ eventHub.addEventListener("officerSelected", e => {
  *  and invokes the function FilteredCriminalList to render the filtered array of criminals to the DOM. 
 */
 eventHub.addEventListener("filterButtonClicked", e => {
-    const appStateCriminals = useCriminals();
-    const appStateOfficers = useOfficers();
-    const appStateConvictions = useConvictions();
+    if ((selectedOfficerIdState !== null && selectedOfficerIdState !== 0) && (selectedCrimeIdState !== null && selectedCrimeIdState !== 0)) {
+        const appStateCriminals = useCriminals();
+        const appStateOfficers = useOfficers();
+        const appStateConvictions = useConvictions();
 
-    const officerName = appStateOfficers.find(c => c.id === selectedOfficerIdState).name
-    const convictionName = appStateConvictions.find(c => c.id === selectedCrimeIdState).name
-    const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName && c.conviction === convictionName);
-    FilteredCriminalList(filteredCriminalArray);
+        const officerName = appStateOfficers.find(c => c.id === selectedOfficerIdState).name
+        const convictionName = appStateConvictions.find(c => c.id === selectedCrimeIdState).name
+        const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName && c.conviction === convictionName);
+        FilteredCriminalList(filteredCriminalArray);
+    }
 });
