@@ -1,0 +1,66 @@
+/* CSS file for the form element (.note) in the section (.notesContainer). */
+
+#button--listAllNotes {
+    display: block;
+    font-family: monospace;
+    margin: 20px auto;
+    padding: 1em;
+}
+
+#button--toggleNotesList {
+    font-family: monospace;
+    margin: auto;
+    padding: 1em;
+}
+
+#button--toggleNoteForm {
+    font-family: monospace;
+    margin: auto;
+    padding: 1em;
+}
+
+.deleteNoteButton {
+    bottom: 15px;
+    display: inline-block;
+    padding: 0.5em;
+    position: absolute;
+    right: 10px;
+}
+
+.editNoteButton {
+    bottom: 15px;
+    display: inline-block;
+    padding: 0.5em;
+    position: absolute;
+    right: 45%;
+}
+
+.note {
+    background-color: aliceblue;
+    border: 1px solid black;
+    font-family: monospace;
+    margin: 15px auto;
+    min-height: 165px;
+    padding: 15px;
+    position: relative;
+    text-indent: 20px;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+#note__heading {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.note__suspect {
+    text-decoration: underline;
+}
+
+.toggleNoteButton {
+    bottom: 15px;
+    display: inline-block;
+    left: 10px;
+    padding: 0.5em;
+    position: absolute;
+}

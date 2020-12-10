@@ -21,9 +21,9 @@ export const Criminal = (criminalObject) => {
 
             <button id="associates--${criminalObject.id}">Associate Alibis</button>
 
-            </div>
+        </div>
 
-            <button id="hideCriminal--${criminalObject.id}">Remove Criminal From Current List</button>
+        <button id="hideCriminal--${criminalObject.id}">Remove Criminal From Current List</button>
     </div>
     `
 }
