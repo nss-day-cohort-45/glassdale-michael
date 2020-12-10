@@ -11,6 +11,9 @@ import { Criminal } from "./Criminal.js";
 const eventHub = document.querySelector("#container");
 const targetListContainer = document.querySelector("#listContainer");
 
+let selectedCrimeIdState = null;
+let selectedOfficerIdState = null;
+
 /*
 *   Criminal List gathers an array of criminal objects from useCriminals, clears the target container,
 *   and maps over the array of criminal objects invoking Criminal to return an array of HTML representations
@@ -49,6 +52,7 @@ eventHub.addEventListener("crimeSelected", e => {
     const appStateCriminals = useCriminals();
     const appStateConvictions = useConvictions();
     const selectedCrimeId = parseInt(e.detail.key);
+    selectedCrimeIdState = selectedCrimeId;
 
     if (selectedCrimeId === 0) {
         CriminalList();
@@ -67,6 +71,7 @@ eventHub.addEventListener("officerSelected", e => {
     const appStateCriminals = useCriminals();
     const appStateOfficers = useOfficers();
     const selectedOfficerId = parseInt(e.detail.key);
+    selectedOfficerIdState = selectedOfficerId;
 
     if (selectedOfficerId === 0) {
         CriminalList();
@@ -75,4 +80,19 @@ eventHub.addEventListener("officerSelected", e => {
         const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName);
         FilteredCriminalList(filteredCriminalArray);
     };
+});
+
+/*
+ *  Listens for the custom event, filterButtonClicked, to set the container (#listContainer) to empty, 
+ *  and invokes the function FilteredCriminalList to render the filtered array of criminals to the DOM. 
+*/
+eventHub.addEventListener("filterButtonClicked", e => {
+    const appStateCriminals = useCriminals();
+    const appStateOfficers = useOfficers();
+    const appStateConvictions = useConvictions();
+
+    const officerName = appStateOfficers.find(c => c.id === selectedOfficerIdState).name
+    const convictionName = appStateConvictions.find(c => c.id === selectedCrimeIdState).name
+    const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName && c.conviction === convictionName);
+    FilteredCriminalList(filteredCriminalArray);
 });

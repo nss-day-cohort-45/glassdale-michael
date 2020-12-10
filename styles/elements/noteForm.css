@@ -1,0 +1,38 @@
+/* CSS file for the form element (#noteForm) in the article (.noteFormContainer). */
+#note--date {
+    margin-bottom: 20px;
+    margin-left: 26px;
+    padding-right: 17px;
+}
+
+#note--suspect {
+    height: 25px;
+    margin-bottom: 20px;
+}
+
+#note--text {
+    display: block;
+    height: 100px;
+    margin: auto;
+    width: 90%;
+}
+
+#noteForm {
+    background-color: aliceblue;
+    border: 2px solid black;
+    display: block;
+    font-family: monospace;
+    font-size: 1.25em;
+    font-weight: bold;
+    justify-content: space-around;
+    margin: 25px auto;
+    max-width: 75%;
+    min-width: 500px;
+    padding: 20px;
+}
+
+#saveNote {
+    display: block;
+    margin: 25px auto;
+    padding: 1.25em;
+}
