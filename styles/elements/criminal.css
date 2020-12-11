@@ -31,6 +31,10 @@
     margin: 5rem auto;
 }
 
+#radioDivLabel {
+    margin: 0.5px;
+}
+
 .red {
     background-color: red;
 }
@@ -53,4 +57,76 @@
 
 .violet {
     background-color: violet;
+}
+
+.antiquewhite {
+    background-color: antiquewhite;
+}
+
+.choral {
+    background-color: coral;
+}
+
+.crimson {
+    background-color: crimson;
+}
+
+.cadetblue {
+    background-color: cadetblue;
+}
+
+.goldenrod {
+    background-color: goldenrod;
+}
+
+.darkolivegreen {
+    background-color: darkolivegreen;
+}
+
+.darksalmon {
+    background-color: darksalmon;
+}
+
+.darkorchid {
+    background-color: darkorchid;
+}
+
+.deeppink {
+    background-color: deeppink;
+}
+
+.fuchsia {
+    background-color: fuchsia;
+}
+
+.lightgreen {
+    background-color: lightgreen;
+}
+
+.maroon {
+    background-color: maroon;
+}
+
+.mediumseagreen {
+    background-color: mediumseagreen;
+}
+
+.paleturquoise {
+    background-color: paleturquoise;
+}
+
+.palevioletred {
+    background-color: palevioletred;
+}
+
+.rebeccapurple {
+    background-color: rebeccapurple;
+}
+
+.rosybrown {
+    background-color: rosybrown;
+}
+
+.skyblue {
+    background-color: skyblue;
 }

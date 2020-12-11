@@ -7,6 +7,7 @@ import { ConvictionSelect } from "./convictions/ConvictionSelect.js";
 import { CriminalList } from "./criminals/CriminalList.js";
 import { CriminalListButton } from "./criminals/CriminalListButton.js";
 import { CriminalListFilterButton } from "./criminals/CriminalListFilterButton.js";
+import { CriminalThemeRadios } from "./criminals/CriminalThemeRadios.js";
 import { NoteFormButton } from "./notes/NoteFormButton.js";
 import { NotesListButton } from "./notes/NoteListButton.js";
 import { OfficerSelect } from "./officers/OfficerSelect.js";
@@ -26,3 +27,4 @@ getNotes()
 CriminalListButton();
 CriminalListFilterButton();
 NoteFormButton();
+CriminalThemeRadios();
