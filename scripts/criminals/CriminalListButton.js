@@ -17,11 +17,9 @@ export const CriminalListButton = () => {
 *   Listens for a "click" event and dispatches the custom event, criminalListGenerate, to the eventHub
 *   to set the article element (#listContainer) to empty and render a list of criminals to the DOM in (#listContainer).
 */
-targetContentContainer.addEventListener(
-    "click",
-    e => {
-        if (e.target.id === ("button--criminalList")) {
-            const criminalListGenerateEvent = new CustomEvent("criminalListGenerate");
-            eventHub.dispatchEvent(criminalListGenerateEvent);
-        }
-    });
+targetContentContainer.addEventListener("click", e => {
+    if (e.target.id === ("button--criminalList")) {
+        const criminalListGenerateEvent = new CustomEvent("criminalListGenerate");
+        eventHub.dispatchEvent(criminalListGenerateEvent);
+    }
+});

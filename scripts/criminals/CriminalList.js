@@ -7,9 +7,11 @@ import { useCriminals } from "./criminalsDataProvider.js";
 import { useConvictions } from "../convictions/convictionsDataProvider.js";
 import { useOfficers } from "../officers/officersDataProvider.js";
 import { Criminal } from "./Criminal.js";
+import { CriminalConvictionKey } from "./CriminalConvictionKey.js";
 
 const eventHub = document.querySelector("#container");
-const targetListContainer = document.querySelector("#listContainer");
+const targetContentContainer = document.querySelector("#listContainer");
+const targetContentKeyContainer = document.querySelector("#listKeyContainer");
 
 let filterState = false;
 let selectedCrimeIdState = null;
@@ -24,14 +26,32 @@ let randomColorThemeState = true;
 
 export const CriminalList = () => {
     const appStateCriminals = useCriminals();
-    targetListContainer.innerHTML = "";
-    targetListContainer.innerHTML = appStateCriminals.map(c => Criminal(c, randomColorThemeState)).join("");
+    targetContentContainer.innerHTML = "";
+    targetContentContainer.innerHTML = appStateCriminals.map(c => Criminal(c, randomColorThemeState)).join("");
+    CriminalConvictionKeyList(appStateCriminals);
 }
 
 // Render filtered criminals and dialog elements after filtering with changeConviction or changeOfficer custom event.
 const FilteredCriminalList = (filteredArray) => {
-    targetListContainer.innerHTML = "";
-    targetListContainer.innerHTML = filteredArray.map(c => Criminal(c, randomColorThemeState)).join("");
+    targetContentContainer.innerHTML = "";
+    targetContentContainer.innerHTML = filteredArray.map(c => Criminal(c, randomColorThemeState)).join("");
+    CriminalConvictionKeyList(filteredArray);
+}
+
+/*
+*   Conviction Key List renders a color key to the DOM to allow users to quickly identify 
+*   which conviction type the criminal has been convicted of.
+*/
+
+const CriminalConvictionKeyList = (appStateCriminals) => {
+    if (randomColorThemeState) {
+        targetContentKeyContainer.innerHTML = "";
+    } else {
+        targetContentKeyContainer.innerHTML = "";
+        const convictions = [...new Set(appStateCriminals.map(c => c.conviction))];
+
+        targetContentKeyContainer.innerHTML = convictions.map(c => CriminalConvictionKey(c)).join("");
+    }
 }
 
 /*

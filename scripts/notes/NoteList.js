@@ -28,7 +28,7 @@ const NoteList = () => {
     targetContentContainer.innerHTML += appStateNotes.map(cno => {
         const criminal = appStateCriminals.find(c => c.id === cno.criminalId);
         return Note(cno, criminal);
-    }).join("")
+    }).join("");
 };
 
 /*

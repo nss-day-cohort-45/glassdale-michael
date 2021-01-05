@@ -17,11 +17,9 @@ export const CriminalListFilterButton = () => {
 *   Listens for a "click" event and dispatches the custom event, filterButtonClicked, to the eventHub
 *   to set the article element (#listContainer) to empty and render a list of criminals to the DOM in (#listContainer).
 */
-targetContentContainer.addEventListener(
-    "click",
-    e => {
-        if (e.target.id === ("button--filterCriminalList")) {
-            const criminalListFilterEvent = new CustomEvent("filterButtonClicked");
-            eventHub.dispatchEvent(criminalListFilterEvent);
-        }
-    });
+targetContentContainer.addEventListener("click", e => {
+    if (e.target.id === ("button--filterCriminalList")) {
+        const criminalListFilterEvent = new CustomEvent("filterButtonClicked");
+        eventHub.dispatchEvent(criminalListFilterEvent);
+    }
+});

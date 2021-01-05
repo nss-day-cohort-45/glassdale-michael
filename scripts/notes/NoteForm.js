@@ -6,7 +6,7 @@ import { saveNote, editNote, useNotes } from "./notesDataProvider.js";
 import { useCriminals } from "../criminals/criminalsDataProvider.js";
 
 const eventHub = document.querySelector("#container");
-const contentTargetElement = document.querySelector("#noteFormContainer");
+const targetContentContainer = document.querySelector("#noteFormContainer");
 
 let visibility = false;
 let editState = false;
@@ -19,7 +19,7 @@ let editStateId = null;
 const NoteForm = () => {
     const appStateCriminals = useCriminals();
 
-    contentTargetElement.innerHTML = `
+    targetContentContainer.innerHTML = `
     <section id="noteFormContainer">
     <form id="noteForm">
         <label for="note--date">Date:</label>
@@ -53,7 +53,7 @@ export const resetNoteForm = () => {
  *  Adds a "click" event listener to the button element (#saveNote) that collects the user entered data 
  *  of the form element (#noteForm) and runs the function saveNote to submit the data. 
 */
-contentTargetElement.addEventListener("click", e => {
+targetContentContainer.addEventListener("click", e => {
     if (e.target.id === "saveNote") {
         e.preventDefault();
         const date = document.getElementById("note--date").value;
@@ -70,7 +70,7 @@ contentTargetElement.addEventListener("click", e => {
             editNote(note).then(() => {
                 visibility = !visibility;
                 editState = !editState;
-                contentTargetElement.innerHTML = "";
+                targetContentContainer.innerHTML = "";
             });
 
         } else {
@@ -85,7 +85,7 @@ contentTargetElement.addEventListener("click", e => {
                 }
                 saveNote(newNote).then(() => {
                     visibility = !visibility;
-                    contentTargetElement.innerHTML = "";
+                    targetContentContainer.innerHTML = "";
                 });
             }
         };
@@ -100,7 +100,7 @@ eventHub.addEventListener("toggleNoteFormButtonClicked", e => {
         NoteForm();
     }
     else {
-        contentTargetElement.innerHTML = "";
+        targetContentContainer.innerHTML = "";
         editState = false;
     };
 });

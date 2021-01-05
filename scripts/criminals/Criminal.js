@@ -4,7 +4,7 @@
 */
 
 const eventHub = document.querySelector("#container");
-const targetListContainer = document.querySelector("#listContainer");
+const targetContentContainer = document.querySelector("#listContainer");
 
 let color;
 const colorArray = [
@@ -24,7 +24,7 @@ export const Criminal = (criminalObject, randomColorThemeState) => {
         let randomNumber = Math.floor(Math.random() * 6);
         color = colorArray[randomNumber]
     } else {
-        switchFunction(criminalObject.conviction);
+        color = switchFunction(criminalObject.conviction);
     };
 
     return `
@@ -51,7 +51,7 @@ export const Criminal = (criminalObject, randomColorThemeState) => {
  *  Listens for a "click" event and dispatches the custom event, assiciatesButtonClicked,
  *  to the eventHub to open a dialog box with a list of known associates and a corresponding alibi.
 */
-targetListContainer.addEventListener(
+targetContentContainer.addEventListener(
     "click",
     e => {
         if (e.target.id.startsWith("associates--")) {
@@ -68,83 +68,60 @@ targetListContainer.addEventListener(
 *   Listens for a "click" event listener on the button element that starts with (#hideCriminal--),
 *   which sets the corresponding criminal card to display: none, by adding the class "hidden".
 */
-targetListContainer.addEventListener("click", e => {
+targetContentContainer.addEventListener("click", e => {
     if (e.target.id.startsWith("hideCriminal--"))
         e.target.parentElement.remove();
 });
 
-const switchFunction = (conviction) => {
+export const switchFunction = (conviction) => {
     switch (conviction) {
         case "arson":
-            color = "orange";
-            break;
+            return "orange";
         case "murder":
-            color = "crimson";
-            break;
+            return "crimson";
         case "grand theft":
-            color = "green";
-            break;
+            return "green";
         case "vandalism":
-            color = "cadetblue";
-            break;
+            return "cadetblue";
         case "assault":
-            color = "red";
-            break;
+            return "coral";
         case "battery":
-            color = "maroon";
-            break;
+            return "maroon";
         case "conspiracy to commit murder":
-            color = "yellow";
-            break;
+            return "yellow";
         case "tax evasion":
-            color = "antiquewhite";
-            break;
+            return "antiquewhite";
         case "theft":
-            color = "darkorchid";
-            break;
+            return "darkorchid";
         case "assault with a deadly weapon":
-            color = "coral";
-            break;
+            return "red";
         case "manslaughter":
-            color = "violet";
-            break;
+            return "violet";
         case "blackmail":
-            color = "mediumseagreen";
-            break;
+            return "mediumseagreen";
         case "bribery":
-            color = "blue";
-            break;
+            return "blue";
         case "burglary":
-            color = "lightgreen";
-            break;
+            return "lightgreen";
         case "forgery":
-            color = "darkolivegreen";
-            break;
+            return "darkolivegreen";
         case "fraud":
-            color = "deeppink";
-            break;
+            return "deeppink";
         case "mail fraud":
-            color = "fuchsia";
-            break;
+            return "fuchsia";
         case "larceny":
-            color = "darksalmon";
-            break;
+            return "darksalmon";
         case "kidnapping":
-            color = "paleturquoise";
-            break;
+            return "paleturquoise";
         case "extortion":
-            color = "goldenrod";
-            break;
+            return "goldenrod";
         case "false imprisonment":
-            color = "palevioletred";
-            break;
+            return "palevioletred";
         case "criminal negligence":
-            color = "rebeccapurple";
-            break;
+            return "rebeccapurple";
         case "child abuse":
-            color = "skyblue";
-            break;
+            return "skyblue";
         case "animal abuse":
-            color = "rosybrown";
+            return "rosybrown";
     };
 };
