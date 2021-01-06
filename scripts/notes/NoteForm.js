@@ -27,11 +27,10 @@ const NoteForm = () => {
         <label for="note--suspect">Suspect:</label>
         <select id="note--suspect">
             <option value="0">Please Choose a Criminal...</option>
-            ${appStateCriminals.map(c => {
+        ${appStateCriminals.map(c => {
         const [firstName, lastName] = c.name.split(" ");
         return `<option value="${c.id}">${lastName}, ${firstName}</option>`
-    }
-    ).join("")
+    }).join("")
         }
         </select></br>
         <label for="note--text">Note:</label></br>
@@ -57,14 +56,14 @@ targetContentContainer.addEventListener("click", e => {
     if (e.target.id === "saveNote") {
         e.preventDefault();
         const date = document.getElementById("note--date").value;
-        const criminalId = document.getElementById("note--suspect").value;
+        const criminalId = parseInt(document.getElementById("note--suspect").value);
         const noteText = document.getElementById("note--text").value;
 
         if (editState) {
             const note = {
                 "date": date,
                 "noteText": noteText,
-                "criminalId": parseInt(criminalId),
+                "criminalId": criminalId,
                 "id": editStateId
             }
             editNote(note).then(() => {
@@ -77,11 +76,10 @@ targetContentContainer.addEventListener("click", e => {
             if (date === "" || criminalId === "" || noteText === "") {
                 alert("Please fully fill out the form before submitting a note. Thank you.");
             } else {
-                debugger
                 const newNote = {
                     "date": date,
                     "noteText": noteText,
-                    "criminalId": parseInt(criminalId)
+                    "criminalId": criminalId
                 }
                 saveNote(newNote).then(() => {
                     visibility = !visibility;
@@ -118,6 +116,6 @@ eventHub.addEventListener("editNoteButtonClicked", e => {
 
     editStateId = noteId;
     document.getElementById("note--date").value = note.date;
-    document.getElementById("note--suspect").value = e.detail.key;
+    document.getElementById("note--suspect").value = note.criminalId;
     document.getElementById("note--text").value = note.noteText;
 });

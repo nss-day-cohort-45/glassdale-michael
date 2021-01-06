@@ -3,6 +3,8 @@
 *   structure to criminal card(s) when given a criminal object as the parameter to the argument.
 */
 
+import { switchFunction } from "../utils/switchFunction.js";
+
 const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#listContainer");
 
@@ -72,56 +74,3 @@ targetContentContainer.addEventListener("click", e => {
     if (e.target.id.startsWith("hideCriminal--"))
         e.target.parentElement.remove();
 });
-
-export const switchFunction = (conviction) => {
-    switch (conviction) {
-        case "arson":
-            return "orange";
-        case "murder":
-            return "crimson";
-        case "grand theft":
-            return "green";
-        case "vandalism":
-            return "cadetblue";
-        case "assault":
-            return "coral";
-        case "battery":
-            return "maroon";
-        case "conspiracy to commit murder":
-            return "yellow";
-        case "tax evasion":
-            return "antiquewhite";
-        case "theft":
-            return "darkorchid";
-        case "assault with a deadly weapon":
-            return "red";
-        case "manslaughter":
-            return "violet";
-        case "blackmail":
-            return "mediumseagreen";
-        case "bribery":
-            return "blue";
-        case "burglary":
-            return "lightgreen";
-        case "forgery":
-            return "darkolivegreen";
-        case "fraud":
-            return "deeppink";
-        case "mail fraud":
-            return "fuchsia";
-        case "larceny":
-            return "darksalmon";
-        case "kidnapping":
-            return "paleturquoise";
-        case "extortion":
-            return "goldenrod";
-        case "false imprisonment":
-            return "palevioletred";
-        case "criminal negligence":
-            return "rebeccapurple";
-        case "child abuse":
-            return "skyblue";
-        case "animal abuse":
-            return "rosybrown";
-    };
-};

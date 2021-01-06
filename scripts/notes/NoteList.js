@@ -1,9 +1,8 @@
 // NoteList module that renders a list of note HTML elements to #notesListContainer.
 
-import { useNotes, getNotes } from './notesDataProvider.js';
-import { Note } from './Note.js';
+import { useNotes } from './notesDataProvider.js';
 import { useCriminals } from '../criminals/criminalsDataProvider.js';
-
+import { Note } from './Note.js';
 
 const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#notesListContainer");
@@ -18,16 +17,18 @@ let visibility = false;
 
 // Function that invokes noteRender to list all notes to DOM.
 const NoteList = () => {
+    const appStateNotes = useNotes();
+    const appStateCriminals = useCriminals();
+
     targetContentContainer.innerHTML = `
         <button id="button--listAllNotes">Show All Notes</button>
     `
 
-    const appStateNotes = useNotes();
-    const appStateCriminals = useCriminals();
-
     targetContentContainer.innerHTML += appStateNotes.map(cno => {
         const criminal = appStateCriminals.find(c => c.id === cno.criminalId);
-        return Note(cno, criminal);
+        cno.name = criminal.name;
+
+        return Note(cno);
     }).join("");
 };
 

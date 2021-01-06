@@ -6,7 +6,7 @@ import { getNotes } from "./notes/notesDataProvider.js";
 import { ConvictionSelect } from "./convictions/ConvictionSelect.js";
 import { CriminalList } from "./criminals/CriminalList.js";
 import { CriminalListButton } from "./criminals/CriminalListButton.js";
-import { CriminalListFilterButton } from "./criminals/CriminalListFilterButton.js";
+import { CriminalListFilterCheckbox } from "./criminals/CriminalListFilterCheckbox.js";
 import { CriminalThemeRadios } from "./criminals/CriminalThemeRadios.js";
 import { NoteFormButton } from "./notes/NoteFormButton.js";
 import { NotesListButton } from "./notes/NoteListButton.js";
@@ -16,15 +16,17 @@ import "./notes/NoteForm.js";
 import "./notes/NoteList.js";
 
 getCriminals()
-    .then(CriminalList);
+    .then(getNotes)
+    .then(CriminalList)
+
 getConvictions()
     .then(ConvictionSelect);
+
 getOfficers()
     .then(OfficerSelect);
-getNotes()
-    .then(NotesListButton);
 
-CriminalListButton();
-CriminalListFilterButton();
-NoteFormButton();
+CriminalListFilterCheckbox();
 CriminalThemeRadios();
+CriminalListButton();
+NoteFormButton();
+NotesListButton();

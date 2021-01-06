@@ -40,3 +40,10 @@ contentTargetContainer.addEventListener(
         }
     }
 );
+
+/*
+ *  Listens for the custom event, convictionsSelectReset, to set the select element to the default value.
+*/
+eventHub.addEventListener("convictionsSelectReset", e => {
+    document.querySelector("#crimeSelect").value = "0";
+});

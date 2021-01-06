@@ -14,6 +14,7 @@ const targetContentContainer = document.querySelector("#listContainer");
 const targetContentKeyContainer = document.querySelector("#listKeyContainer");
 
 let filterState = false;
+let filterByBothState = false;
 let selectedCrimeIdState = null;
 let selectedOfficerIdState = null;
 let randomColorThemeState = true;
@@ -50,8 +51,24 @@ const CriminalConvictionKeyList = (appStateCriminals) => {
         targetContentKeyContainer.innerHTML = "";
         const convictions = [...new Set(appStateCriminals.map(c => c.conviction))];
 
-        targetContentKeyContainer.innerHTML = convictions.map(c => CriminalConvictionKey(c)).join("");
+        targetContentKeyContainer.innerHTML = convictions.sort().map(c => CriminalConvictionKey(c)).join("");
     }
+}
+
+/*
+*   filterByBoth filters appStateCriminals by both arresting officer and conviction, 
+*   and invokes the function, FilteredCriminalList, with the array as an argument.
+*/
+
+const filterByBoth = () => {
+    const appStateCriminals = useCriminals();
+    const appStateOfficers = useOfficers();
+    const appStateConvictions = useConvictions();
+
+    const officerName = appStateOfficers.find(c => c.id === selectedOfficerIdState).name;
+    const convictionName = appStateConvictions.find(c => c.id === selectedCrimeIdState).name;
+    const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName && c.conviction === convictionName);
+    FilteredCriminalList(filteredCriminalArray);
 }
 
 /*
@@ -62,12 +79,15 @@ const CriminalConvictionKeyList = (appStateCriminals) => {
 eventHub.addEventListener("criminalListGenerate", e => {
     CriminalList();
 
-    document.querySelector("#officerSelect").value = "0";
-    document.querySelector("#crimeSelect").value = "0";
-
     selectedCrimeIdState = null;
     selectedOfficerIdState = null;
     filterState = false;
+
+    const resetOfficerEvent = new CustomEvent("officerSelectReset")
+    eventHub.dispatchEvent(resetOfficerEvent);
+
+    const resetConvictionsEvent = new CustomEvent("convictionsSelectReset")
+    eventHub.dispatchEvent(resetConvictionsEvent);
 });
 
 /*
@@ -81,15 +101,30 @@ eventHub.addEventListener("crimeSelected", e => {
         CriminalList();
         filterState = false;
         selectedCrimeIdState = null;
+
+        const resetOfficerEvent = new CustomEvent("officerSelectReset")
+        eventHub.dispatchEvent(resetOfficerEvent);
     } else {
-        const appStateCriminals = useCriminals();
-        const appStateConvictions = useConvictions();
         selectedCrimeIdState = selectedCrimeId;
         filterState = true;
 
-        const convictionName = appStateConvictions.find(c => c.id === selectedCrimeId).name;
-        const filteredCriminalArray = appStateCriminals.filter(c => c.conviction === convictionName);
-        FilteredCriminalList(filteredCriminalArray);
+        if (filterByBothState) {
+            if ((selectedOfficerIdState || selectedCrimeIdState) === null) {
+                return;
+            } else {
+                filterByBoth();
+            }
+        } else {
+            const appStateCriminals = useCriminals();
+            const appStateConvictions = useConvictions();
+
+            const convictionName = appStateConvictions.find(c => c.id === selectedCrimeId).name;
+            const filteredCriminalArray = appStateCriminals.filter(c => c.conviction === convictionName);
+            FilteredCriminalList(filteredCriminalArray);
+
+            const resetOfficerEvent = new CustomEvent("officerSelectReset")
+            eventHub.dispatchEvent(resetOfficerEvent);
+        }
     };
 });
 
@@ -104,32 +139,49 @@ eventHub.addEventListener("officerSelected", e => {
         CriminalList();
         filterState = false;
         selectedOfficerIdState = null;
+
+        const resetConvictionsEvent = new CustomEvent("convictionsSelectReset")
+        eventHub.dispatchEvent(resetConvictionsEvent);
     } else {
-        const appStateCriminals = useCriminals();
-        const appStateOfficers = useOfficers();
         selectedOfficerIdState = selectedOfficerId;
         filterState = true;
 
-        const officerName = appStateOfficers.find(c => c.id === selectedOfficerId).name;
-        const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName);
-        FilteredCriminalList(filteredCriminalArray);
+        if (filterByBothState) {
+            if ((selectedOfficerIdState || selectedCrimeIdState) === null) {
+                return;
+            } else {
+                filterByBoth();
+            }
+        } else {
+            const appStateCriminals = useCriminals();
+            const appStateOfficers = useOfficers();
+
+            const officerName = appStateOfficers.find(c => c.id === selectedOfficerId).name;
+            const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName);
+            FilteredCriminalList(filteredCriminalArray);
+
+            const resetConvictionsEvent = new CustomEvent("convictionsSelectReset")
+            eventHub.dispatchEvent(resetConvictionsEvent);
+        }
     };
 });
 
 /*
- *  Listens for the custom event, filterButtonClicked, to set the container (#listContainer) to empty, 
+ *  Listens for the custom event, filterCheckboxClicked, to set the container (#listContainer) to empty, 
  *  and invokes the function FilteredCriminalList to render the filtered array of criminals to the DOM. 
 */
-eventHub.addEventListener("filterButtonClicked", e => {
-    if ((selectedOfficerIdState !== null && selectedOfficerIdState !== 0) && (selectedCrimeIdState !== null && selectedCrimeIdState !== 0)) {
-        const appStateCriminals = useCriminals();
-        const appStateOfficers = useOfficers();
-        const appStateConvictions = useConvictions();
+eventHub.addEventListener("filterCheckboxClicked", e => {
+    filterByBothState = !filterByBothState
 
-        const officerName = appStateOfficers.find(c => c.id === selectedOfficerIdState).name;
-        const convictionName = appStateConvictions.find(c => c.id === selectedCrimeIdState).name;
-        const filteredCriminalArray = appStateCriminals.filter(c => c.arrestingOfficer === officerName && c.conviction === convictionName);
-        FilteredCriminalList(filteredCriminalArray);
+    if (!filterByBothState) {
+        CriminalList();
+
+        document.querySelector("#officerSelect").value = "0";
+        document.querySelector("#crimeSelect").value = "0";
+
+        filterState = false;
+        selectedCrimeIdState = null;
+        selectedOfficerIdState = null;
     }
 });
 

@@ -10,8 +10,8 @@ const targetContentContainer = document.querySelector("#notesListContainer");
 *   a note object and a criminal object, and returns a string of HTML.
 */
 
-export const Note = (noteObject, criminalObject) => {
-    const [firstName, lastName] = criminalObject.name.split(" ");
+export const Note = (noteObject) => {
+    const [firstName, lastName] = noteObject.name.split(" ");
     return `
     <section class="note" id="note--${noteObject.id}">
         <h4 class="note__suspect"><span class="bold">Suspect</span>: ${lastName}, ${firstName}</h4>

@@ -26,16 +26,21 @@ export const OfficerSelect = () => {
 
 
 // Dispatches a custom event, officerSelected, and passes on the id of the officer via the chosenOfficerId detail.
-contentTargetContainer.addEventListener(
-    "change",
-    e => {
-        if (e.target.id === "officerSelect") {
-            let chosenOfficerId = e.target.value;
-            let changeOfficerEvent = new CustomEvent("officerSelected", {
-                detail: {
-                    key: chosenOfficerId
-                }
-            })
-            eventHub.dispatchEvent(changeOfficerEvent);
-        }
-    });
+contentTargetContainer.addEventListener("change", e => {
+    if (e.target.id === "officerSelect") {
+        let chosenOfficerId = e.target.value;
+        let changeOfficerEvent = new CustomEvent("officerSelected", {
+            detail: {
+                key: chosenOfficerId
+            }
+        })
+        eventHub.dispatchEvent(changeOfficerEvent);
+    }
+});
+
+/*
+*  Listens for the custom event, officerSelectReset, to set the select element to the default value.
+*/
+eventHub.addEventListener("officerSelectReset", e => {
+    document.querySelector("#officerSelect").value = "0";
+});
