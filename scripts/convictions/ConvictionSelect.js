@@ -46,4 +46,12 @@ contentTargetContainer.addEventListener(
 */
 eventHub.addEventListener("convictionsSelectReset", e => {
     document.querySelector("#crimeSelect").value = "0";
+    document.querySelector("#crimeSelect").disabled = false;
 });
+
+/*
+ *  Listens for the custom event, witnessListGenerate, to set the ConvictionSelect to disabled.
+*/
+eventHub.addEventListener("witnessListGenerate", event => {
+    document.querySelector("#crimeSelect").disabled = true;
+})

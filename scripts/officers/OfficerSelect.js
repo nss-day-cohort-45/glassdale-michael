@@ -43,4 +43,12 @@ contentTargetContainer.addEventListener("change", e => {
 */
 eventHub.addEventListener("officerSelectReset", e => {
     document.querySelector("#officerSelect").value = "0";
+    document.querySelector("#officerSelect").disabled = false;
 });
+
+/*
+ *  Listens for the custom event, witnessListGenerate, to set the OfficerSelect to disabled.
+*/
+eventHub.addEventListener("witnessListGenerate", event => {
+    document.querySelector("#officerSelect").disabled = true;
+})

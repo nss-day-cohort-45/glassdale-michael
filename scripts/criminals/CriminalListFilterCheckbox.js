@@ -20,11 +20,23 @@ export const CriminalListFilterCheckbox = () => {
 */
 targetContentContainer.addEventListener("click", e => {
     if (e.target.id === ("checkbox--filterCriminalList")) {
-        const criminalListFilterEvent = new CustomEvent("filterCheckboxClicked", {
-            detail: {
-                checked: e.target.checked
-            }
-        });
+        const criminalListFilterEvent = new CustomEvent("filterCheckboxClicked");
         eventHub.dispatchEvent(criminalListFilterEvent);
     }
+});
+
+/*
+*  Listens for the custom event, criminalListGenerate, and sets the checkbox to unchecked and enabled.
+*/
+
+eventHub.addEventListener("criminalListGenerate", e => {
+    document.querySelector("#checkbox--filterCriminalList").disabled = false;
+    document.querySelector("#checkbox--filterCriminalList").checked = false;
+});
+
+/*
+ *  Listens for the custom event, witnessListGenerate, to set the checkbox to disabled.
+*/
+eventHub.addEventListener("witnessListGenerate", event => {
+    document.querySelector("#checkbox--filterCriminalList").disabled = true;
 });
