@@ -4,7 +4,7 @@
  */
 
 const eventHub = document.querySelector("#container");
-const targetContentContainer = document.querySelector("#buttonContainer");
+const targetContentContainer = document.querySelector("#buttonContainer__criminalList");
 
 // Inserts a button, Show All Criminals, onto the DOM in the header element (#headerContainer).
 export const CriminalListButton = () => {

@@ -4,22 +4,25 @@
  */
 
 const eventHub = document.querySelector("#container");
-const targetHeaderContentElement = document.querySelector("#buttonContainer");
+const targetContentElement = document.querySelector("#buttonContainer__witnessList");
 
 // Inserts a button, Witness Statements, onto the DOM in the header element (.headerContainer).
 export const WitnessListButton = () => {
-    targetHeaderContentElement.innerHTML += `
+    targetContentElement.innerHTML += `
     <button id="button--witnessList">Witness Statements</button>
     `
 }
 
 /*
- *  Listens for a "click" event and dispatches the custom event, witnessListGenerate, to the eventHub
- *  to set the article element (.listContainer) to empty and render a list of witnesses to the DOM in (.listContainer). 
+*  Listens for a "click" event and dispatches the custom events, witnessListGenerate & disableAffordanceEvent, to the eventHub
+*  to set the article element (.listContainer) to empty and render a list of witnesses to the DOM in (.listContainer). 
 */
-targetHeaderContentElement.addEventListener("click", e => {
+targetContentElement.addEventListener("click", e => {
     if (e.target.id === ("button--witnessList")) {
         const witnessListGenerateEvent = new CustomEvent("witnessListGenerate");
         eventHub.dispatchEvent(witnessListGenerateEvent);
+
+        const disableAffordanceEvent = new CustomEvent("disableAffordanceEvent");
+        eventHub.dispatchEvent(disableAffordanceEvent);
     }
 })

@@ -4,7 +4,7 @@
  */
 
 const eventHub = document.querySelector("#container");
-const targetContentContainer = document.querySelector("#buttonContainer");
+const targetContentContainer = document.querySelector("#buttonContainer__noteForm");
 
 export const NoteFormButton = () => {
     targetContentContainer.innerHTML += "<button id='button--toggleNoteForm'>Toggle Note Form</button>"

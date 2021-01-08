@@ -56,8 +56,8 @@ eventHub.addEventListener("officerSelectReset", e => {
 });
 
 /*
- *  Listens for the custom event, witnessListGenerate, to set the OfficerSelect to disabled.
+ *  Listens for the custom event, otherListGenerate, to set the OfficerSelect to disabled.
 */
-eventHub.addEventListener("witnessListGenerate", event => {
+eventHub.addEventListener("otherListGenerate", e => {
     document.querySelector("#officerSelect").disabled = true;
 })

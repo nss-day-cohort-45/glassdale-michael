@@ -9,8 +9,9 @@ const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#listContainer");
 
 // Function, criminal, that accepts an argument, criminalObject, and returns a string of an HTML element.
-export const Criminal = (criminalObject, randomColorThemeState) => {
+export const Criminal = (criminalObject) => {
     const [firstName, lastName] = criminalObject.name.split(" ");
+    const randomColorThemeState = criminalObject.theme;
 
     let color;
     const colorArray = [
@@ -39,6 +40,12 @@ export const Criminal = (criminalObject, randomColorThemeState) => {
             <span class="bold">Incarceration start</span>: ${new Date(criminalObject.incarceration.start).toLocaleDateString()}</br>
             <span class="bold">Incarceration end</span>: ${new Date(criminalObject.incarceration.end).toLocaleDateString()}
             </p>
+            <div>
+                <h4 class="information--facilityName">Facilities</h4>
+            <ul>
+                ${criminalObject.facilities.map(f => `<li>${f.facilityName}</li>`).join("")}
+            </ul>
+            </div>
 
             <button id="associates--${criminalObject.id}">Associate Alibis</button>
 
