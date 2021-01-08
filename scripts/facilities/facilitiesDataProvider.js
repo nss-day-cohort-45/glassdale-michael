@@ -14,7 +14,7 @@ export const useFacilities = () => {
         return 0;
     });
 
-    facilities.slice();
+    return facilities.slice();
 }
 
 export const getFacilities = () => {

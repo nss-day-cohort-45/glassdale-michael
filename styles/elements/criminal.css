@@ -35,6 +35,10 @@
     margin: 0.5px;
 }
 
+.criminalCard__information .facilityName {
+    margin-left: 2rem;
+}
+
 .red {
     background-color: red;
 }

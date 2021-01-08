@@ -57,8 +57,8 @@ eventHub.addEventListener("convictionsSelectReset", e => {
 });
 
 /*
- *  Listens for the custom event, witnessListGenerate, to set the ConvictionSelect to disabled.
+ *  Listens for the custom event, disableAffordanceEvent, to set the ConvictionSelect to disabled.
 */
-eventHub.addEventListener("witnessListGenerate", event => {
+eventHub.addEventListener("disableAffordanceEvent", e => {
     document.querySelector("#crimeSelect").disabled = true;
 })

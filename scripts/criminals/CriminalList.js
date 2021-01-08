@@ -22,7 +22,9 @@
  *   Utilize that tab key! Let auto complete finish whenever possible (saves on spelling errors 😁)
 */
 import { getCriminals, useCriminals } from "./criminalsDataProvider.js";
+import { getCriminalFacilities, useCriminalFacilities } from "../facilities/criminalFacilityDataProvider.js";
 import { getConvictions, useConvictions } from "../convictions/convictionsDataProvider.js";
+import { getFacilities, useFacilities } from "../facilities/facilitiesDataProvider.js";
 import { getOfficers, useOfficers } from "../officers/officersDataProvider.js";
 import { Criminal } from "./Criminal.js";
 import { CriminalConvictionKey } from "./CriminalConvictionKey.js";
@@ -50,9 +52,11 @@ const targetKeyContentContainer = document.querySelector("#listKeyContainer");
  *   is especially dynamic. If there is a chance our data could be changing regularly, it is best to make calls
  *   regularly rather than initially loading and storing data that could quickly become stale.
 */
-let appStateCriminals = [];
-let appStateOfficers = [];
 let appStateConvictions = [];
+let appStateCriminals = [];
+let appStateCriminalFacilities = [];
+let appStateFacilities = [];
+let appStateOfficers = [];
 
 /*
  *   Declare global variables that require use throughout the module. This is useful when one function in the module
@@ -82,8 +86,8 @@ let randomColorThemeState = true;
 //                                                            - FUNCTIONS                                                              //
 // ------------------------------------------------------------------------------------------------------------------------------------//
 /*
- *   CriminalList invokes the getResource functions (getCriminals, getOfficers, getConvictions), to fetch the resources we require.
- *   After our app has fetched the data, we utilize the useResource functions (useCriminals, useOfficers, useConvictions) to set the
+ *   CriminalList invokes the getResource functions (getCriminals, getOfficers, getConvictions, etc.), to fetch the resources we require.
+ *   After our app has fetched the data, we utilize the useResource functions (useCriminals, useOfficers, useConvictions, etc.) to set the
  *   state of our data. We must first invoke the getFunctions because they require time as they await the results of their fetch requests.
  *   If we invoke our useFunctions first, they will return an empty array.
  *   Once we have our appStateResources set in global variable arrays, we invoke the function render. 
@@ -92,10 +96,14 @@ export const CriminalList = () => {
     getCriminals()
         .then(getOfficers)
         .then(getConvictions)
+        .then(getFacilities)
+        .then(getCriminalFacilities)
         .then(() => {
             appStateCriminals = useCriminals();
             appStateOfficers = useOfficers();
             appStateConvictions = useConvictions();
+            appStateCriminalFacilities = useCriminalFacilities();
+            appStateFacilities = useFacilities();
             render();
         });
 }
@@ -115,7 +123,11 @@ const render = () => {
 
     // Left side of the '=' (equal sign) evaluates second!
     // We then take the resulting string of HTML and insert it at the reference node, targetContentContainer, with innerHTML.
-    targetContentContainer.innerHTML = appStateCriminals.map(c => Criminal(c, randomColorThemeState)).join("");
+    targetContentContainer.innerHTML = appStateCriminals.map(c => {
+        c = matchCriminalFacilities(c);
+        c.theme = randomColorThemeState;
+        return Criminal(c);
+    }).join("");
 
     // We then pass the initial array of criminal objects to our function, CriminalConvictionKeyList, as an argument.
     CriminalConvictionKeyList(appStateCriminals);
@@ -147,7 +159,11 @@ const FilteredCriminalList = (filteredArray) => {
 
         // Left side of the '=' (equal sign) evaluates second!
         // We then take the resulting string of HTML and insert it at the reference node, targetContentContainer, with innerHTML.
-        targetContentContainer.innerHTML = filteredArray.map(c => Criminal(c, randomColorThemeState)).join("");
+        targetContentContainer.innerHTML = filteredArray.map(c => {
+            c = matchCriminalFacilities(c);
+            c.theme = randomColorThemeState;
+            return Criminal(c);
+        }).join("");
     };
 
     // We then pass the initial array of criminal objects to our function, CriminalConvictionKeyList, as an argument.
@@ -190,6 +206,11 @@ const CriminalConvictionKeyList = (appStateCriminals) => {
     }
 }
 
+const matchCriminalFacilities = (criminalObject) => {
+    const criminalFacilitiesRelationships = appStateCriminalFacilities.filter(cf => cf.criminalId === criminalObject.id);
+    criminalObject.facilities = criminalFacilitiesRelationships.map(cfr => appStateFacilities.find(sf => sf.id === cfr.facilityId));
+    return criminalObject;
+}
 /*
  *   filterByOfficer filters appStateCriminals by arresting officer, and invokes the function, FilteredCriminalList, with the array as an argument.
 */

@@ -1,0 +1,18 @@
+/* CSS file for the facility card elements (.facility) in article (.listContainer) */
+#button--facilityList {
+    font-family: monospace;
+    margin: auto;
+    padding: 1em;
+}
+
+.facility {
+    background-color: burlywood;
+    border: solid 2px;
+    border-radius: 20px;
+    height: auto;
+    margin: 1rem;
+    min-width: 225px;
+    text-indent: 1rem;
+    text-transform: capitalize;
+    width: 20%;
+}

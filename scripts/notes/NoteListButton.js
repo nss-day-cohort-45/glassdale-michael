@@ -4,7 +4,7 @@
  */
 
 const eventHub = document.querySelector("#container");
-const targetContentContainer = document.querySelector("#buttonContainer");
+const targetContentContainer = document.querySelector("#buttonContainer__noteList");
 
 // Inserts a button, Toggle Notes, onto the DOM in the header (#headerContainer).
 export const NotesListButton = () => {

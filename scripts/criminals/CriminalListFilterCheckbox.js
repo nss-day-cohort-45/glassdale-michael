@@ -35,8 +35,8 @@ eventHub.addEventListener("filterCheckboxReset", e => {
 });
 
 /*
- *  Listens for the custom event, witnessListGenerate, to set the checkbox to disabled.
+ *  Listens for the custom event, disableAffordanceEvent, to set the checkbox to disabled.
 */
-eventHub.addEventListener("witnessListGenerate", event => {
+eventHub.addEventListener("disableAffordanceEvent", event => {
     document.querySelector("#checkbox--filterCriminalList").disabled = true;
 });
