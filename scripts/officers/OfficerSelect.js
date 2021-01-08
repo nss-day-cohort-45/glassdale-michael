@@ -4,24 +4,33 @@
 *   the user the ability to filter the criminal list by arresting officer.
 */
 
-import { useOfficers } from "./officersDataProvider.js";
+import { getOfficers, useOfficers } from "./officersDataProvider.js";
 
+let appStateOfficers = [];
 const eventHub = document.querySelector("#container");
 const contentTargetContainer = document.querySelector("#officerFilter");
 
-// OfficerSelect renders a list of options in the dropdown menue element (#officerSelect).
-export const OfficerSelect = () => {
-    const officers = useOfficers();
+// renders a select element (#officerSelect), and maps over an array of officers for select options.
+const render = () => {
     contentTargetContainer.innerHTML = `
         <select class="dropdown" id="officerSelect">
             <option value="0">Please select an officer...</option>
-            ${officers.map(o => {
+            ${appStateOfficers.map(o => {
         const [firstName, lastName] = o.name.split(" ");
         return `<option id="officerId--${o.id}" value="${o.id}" class="officersMenueItem">${lastName}, ${firstName}</option>`
     }).join("")
         }
         </select>
     `;
+};
+
+// Accesses an array of officer objects by invoking useOfficers, fills the officers array, and invokes render.
+export const OfficerSelect = () => {
+    getOfficers()
+        .then(() => {
+            appStateOfficers = useOfficers();
+            render();
+        });
 };
 
 
@@ -31,7 +40,7 @@ contentTargetContainer.addEventListener("change", e => {
         let chosenOfficerId = e.target.value;
         let changeOfficerEvent = new CustomEvent("officerSelected", {
             detail: {
-                key: chosenOfficerId
+                chosenOfficerId
             }
         })
         eventHub.dispatchEvent(changeOfficerEvent);

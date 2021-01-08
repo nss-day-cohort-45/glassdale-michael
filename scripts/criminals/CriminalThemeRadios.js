@@ -37,7 +37,7 @@ targetContentContainer.addEventListener("click", e => {
 /*
  *  Listens for the custom event, witnessListGenerate, to set the CriminalThemeRadios to disabled.
 */
-eventHub.addEventListener("witnessListGenerate", event => {
+eventHub.addEventListener("witnessListGenerate", e => {
     document.querySelector("#randomRadio").disabled = true;
     document.querySelector("#organizedRadio").disabled = true;
 });

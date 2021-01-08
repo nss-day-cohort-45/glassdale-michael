@@ -21,5 +21,14 @@ targetContentContainer.addEventListener("click", e => {
     if (e.target.id === ("button--criminalList")) {
         const criminalListGenerateEvent = new CustomEvent("criminalListGenerate");
         eventHub.dispatchEvent(criminalListGenerateEvent);
+
+        const resetOfficerSelect = new CustomEvent("officerSelectReset")
+        eventHub.dispatchEvent(resetOfficerSelect);
+
+        const resetConvictionsSelect = new CustomEvent("convictionsSelectReset")
+        eventHub.dispatchEvent(resetConvictionsSelect);
+
+        const resetFilterCheckbox = new CustomEvent("filterCheckboxReset")
+        eventHub.dispatchEvent(resetFilterCheckbox);
     }
 });

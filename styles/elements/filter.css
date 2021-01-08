@@ -1,3 +1,10 @@
 #crimeSelect {
     text-transform: capitalize;
 }
+
+#noResultsAlert{
+    background-color: aliceblue;
+    border-radius: 25px;
+    margin: auto;
+    padding: 4rem;
+}

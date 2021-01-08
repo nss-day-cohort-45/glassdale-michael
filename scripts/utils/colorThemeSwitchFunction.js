@@ -1,9 +1,9 @@
 /*
-*   switchFunction exports the function, switchFunction, that returns a string
+*   colorThemeSwitchFunction exports the function, colorThemeSwitchFunction, that returns a string
 *   of a color for use in CSS to match with a conviction type.
 */
 
-export const switchFunction = (conviction) => {
+export const colorThemeSwitchFunction = (conviction) => {
     switch (conviction) {
         case "arson":
             return "orange";

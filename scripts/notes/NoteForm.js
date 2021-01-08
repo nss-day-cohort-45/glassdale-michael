@@ -3,22 +3,21 @@
 */
 
 import { saveNote, editNote, useNotes } from "./notesDataProvider.js";
-import { useCriminals } from "../criminals/criminalsDataProvider.js";
+import { getCriminals, useCriminals } from "../criminals/criminalsDataProvider.js";
 
 const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#noteFormContainer");
-
+let appStateCriminals = [];
+let appStateNotes = [];
 let visibility = false;
 let editState = false;
 let editStateId = null;
 
 /*
- *  NoteForm renders a form to the DOM at (#noteFormContainer), if either
+ *  Renders a form to the DOM at (#noteFormContainer), if either
  *  visibility is set to true or an edit note button has been clicked.
  */
-const NoteForm = () => {
-    const appStateCriminals = useCriminals();
-
+const render = () => {
     targetContentContainer.innerHTML = `
     <section id="noteFormContainer">
     <form id="noteForm">
@@ -26,7 +25,7 @@ const NoteForm = () => {
         <input type="date" id="note--date" name="note--date"></br>
         <label for="note--suspect">Suspect:</label>
         <select id="note--suspect">
-            <option value="0">Please Choose a Criminal...</option>
+            <option value="">Please Choose a Criminal...</option>
         ${appStateCriminals.map(c => {
         const [firstName, lastName] = c.name.split(" ");
         return `<option value="${c.id}">${lastName}, ${firstName}</option>`
@@ -42,9 +41,28 @@ const NoteForm = () => {
     `
 }
 
+// Accesses an array of criminal objects by invoking useCriinals, fills the appStateCriminals array, and invokes render.
+const NoteForm = () => {
+    getCriminals()
+        .then(() => {
+            appStateCriminals = useCriminals();
+            appStateNotes = useNotes();
+
+            render();
+
+            if (editStateId !== null) {
+                const note = appStateNotes.find(n => n.id === editStateId);
+
+                document.querySelector("#note--date").value = note.date;
+                document.querySelector("#note--suspect").value = note.criminalId;
+                document.querySelector("#note--text").value = note.noteText;
+            }
+        });
+}
+
 // Function that resets the form, #noteForm, when invoked.
 export const resetNoteForm = () => {
-    const noteFormTarget = document.getElementById("noteForm");
+    const noteFormTarget = document.querySelector("#noteForm");
     noteFormTarget.reset();
 };
 
@@ -55,23 +73,27 @@ export const resetNoteForm = () => {
 targetContentContainer.addEventListener("click", e => {
     if (e.target.id === "saveNote") {
         e.preventDefault();
-        const date = document.getElementById("note--date").value;
-        const criminalId = parseInt(document.getElementById("note--suspect").value);
-        const noteText = document.getElementById("note--text").value;
+        const date = document.querySelector("#note--date").value;
+        const criminalId = parseInt(document.querySelector("#note--suspect").value);
+        const noteText = document.querySelector("#note--text").value;
 
         if (editState) {
-            const note = {
-                "date": date,
-                "noteText": noteText,
-                "criminalId": criminalId,
-                "id": editStateId
+            if (date === "" || criminalId === 0 || noteText === "") {
+                alert("Please fully fill out the form before submitting a note. Thank you.");
+            } else {
+                const note = {
+                    "date": date,
+                    "noteText": noteText,
+                    "criminalId": criminalId,
+                    "id": editStateId
+                }
+                editNote(note).then(() => {
+                    visibility = !visibility;
+                    editState = !editState;
+                    editStateId = null;
+                    targetContentContainer.innerHTML = "";
+                });
             }
-            editNote(note).then(() => {
-                visibility = !visibility;
-                editState = !editState;
-                targetContentContainer.innerHTML = "";
-            });
-
         } else {
             if (date === "" || criminalId === "" || noteText === "") {
                 alert("Please fully fill out the form before submitting a note. Thank you.");
@@ -93,13 +115,14 @@ targetContentContainer.addEventListener("click", e => {
 // Listens for a "click" event listener on the button element (#showNoteForm) which toggles the NoteForm visibility.
 eventHub.addEventListener("toggleNoteFormButtonClicked", e => {
     visibility = !visibility
+    editStateId = null;
+    editState = false;
 
     if (visibility) {
         NoteForm();
     }
     else {
         targetContentContainer.innerHTML = "";
-        editState = false;
     };
 });
 
@@ -107,15 +130,7 @@ eventHub.addEventListener("toggleNoteFormButtonClicked", e => {
 eventHub.addEventListener("editNoteButtonClicked", e => {
     visibility = true;
     editState = true;
-
-    const noteId = parseInt(e.detail.key);
-    const appStateNotes = useNotes();
-    const note = appStateNotes.find(n => n.id === noteId);
+    editStateId = parseInt(e.detail.chosenNoteId);
 
     NoteForm();
-
-    editStateId = noteId;
-    document.getElementById("note--date").value = note.date;
-    document.getElementById("note--suspect").value = note.criminalId;
-    document.getElementById("note--text").value = note.noteText;
 });

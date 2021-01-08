@@ -1,30 +1,37 @@
-import { witness } from "./Witness.js";
-import { useWitnesses } from "./witnessesDataProvider.js";
+import { Witness } from "./Witness.js";
+import { getWitnesses, useWitnesses } from "./witnessesDataProvider.js";
 
 // WitnessList module that renders a list of witness HTML elements to .listContainer.
 
 const eventHub = document.querySelector("#container");
 const targetListContainerContentElement = document.querySelector("#listContainer");
+const targetKeyContentContainer = document.querySelector("#listKeyContainer");
 
-// Renders individual witnessObjects onto the DOM by being called in a for/of loop by the function witnessList.
-const render = witnessObject => {
-    targetListContainerContentElement.innerHTML += witness(witnessObject);
+let appStateWitnesses = [];
+
+// Renders a list of witnessObjects onto the DOM.
+const render = () => {
+    targetListContainerContentElement.innerHTML = appStateWitnesses.map(w => Witness(w)).join("");
 }
+
 /*
- *  Remove all criminals and runs the function render to render all witnesses elements 
- *  to the article element (.listContainer) when the button element (#button--witnessList) is "clicked". 
+ *  Runs the function render to render all witnesses elements the article element 
+ *  (.listContainer) when the button element (#button--witnessList) is "clicked".
 */
-const witnessList = () => {
+const WitnessList = () => {
+    targetKeyContentContainer.innerHTML = "";
     targetListContainerContentElement.innerHTML = "";
-    const arrayOfWitnessObjects = useWitnesses();
-    for (const witnessObject of arrayOfWitnessObjects) {
-        render(witnessObject);
-    }
+    getWitnesses()
+        .then(() => {
+            appStateWitnesses = useWitnesses();
+            render();
+        });
 }
+
 /*
- *  Listens for the custom event, witnessListGenerate, to set the article element (.listContainer) to empty,
+ *  Listens for the custom event, WGenerate, to set the article element (.listContainer) to empty,
  *  and render a list of witnesses to the DOM in (.listContainer).
 */
-eventHub.addEventListener("witnessListGenerate", event => {
-    witnessList()
+eventHub.addEventListener("witnessListGenerate", e => {
+    WitnessList();
 })

@@ -3,30 +3,30 @@
 *   structure to criminal card(s) when given a criminal object as the parameter to the argument.
 */
 
-import { switchFunction } from "../utils/switchFunction.js";
+import { colorThemeSwitchFunction } from "../utils/colorThemeSwitchFunction.js";
 
 const eventHub = document.querySelector("#container");
 const targetContentContainer = document.querySelector("#listContainer");
-
-let color;
-const colorArray = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "violet"
-];
 
 // Function, criminal, that accepts an argument, criminalObject, and returns a string of an HTML element.
 export const Criminal = (criminalObject, randomColorThemeState) => {
     const [firstName, lastName] = criminalObject.name.split(" ");
 
+    let color;
+    const colorArray = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "violet"
+    ];
+
     if (randomColorThemeState) {
         let randomNumber = Math.floor(Math.random() * 6);
         color = colorArray[randomNumber]
     } else {
-        color = switchFunction(criminalObject.conviction);
+        color = colorThemeSwitchFunction(criminalObject.conviction);
     };
 
     return `

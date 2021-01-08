@@ -3,11 +3,11 @@
 *   of HTML giving structure to a color key that allows users to easily identify the conviction type.
 */
 
-import { switchFunction } from "../utils/switchFunction.js";
+import { colorThemeSwitchFunction } from "../utils/colorThemeSwitchFunction.js";
 
 // Function, criminal, that accepts an argument, criminalObject, and returns a string of an HTML element.
 export const CriminalConvictionKey = (conviction) => {
-    const color = switchFunction(conviction);
+    const color = colorThemeSwitchFunction(conviction);
 
     return `
     <div class="colorKey">

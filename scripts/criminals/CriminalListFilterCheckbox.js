@@ -26,10 +26,10 @@ targetContentContainer.addEventListener("click", e => {
 });
 
 /*
-*  Listens for the custom event, criminalListGenerate, and sets the checkbox to unchecked and enabled.
+*  Listens for the custom event, filterCheckboxReset, and sets the checkbox to unchecked and enabled.
 */
 
-eventHub.addEventListener("criminalListGenerate", e => {
+eventHub.addEventListener("filterCheckboxReset", e => {
     document.querySelector("#checkbox--filterCriminalList").disabled = false;
     document.querySelector("#checkbox--filterCriminalList").checked = false;
 });
