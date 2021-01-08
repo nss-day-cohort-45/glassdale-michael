@@ -1,0 +1,15 @@
+/* CSS file for the witness elements and Witness Statements button element (#button--witnessList) */
+.witness {
+    background-color: darkseagreen;
+    border: 1px solid black;
+    margin: 20px auto;
+    min-width: 375px;
+    text-indent: 2rem;
+    width: 40%;
+}
+
+#button--witnessList {
+    font-family: monospace;
+    margin: auto;
+    padding: 1em;
+}

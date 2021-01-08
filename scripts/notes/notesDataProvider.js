@@ -2,9 +2,6 @@
 *   noteDataProvider module fetches an array of note objects, fills the array, notes,
 *   and then copies the array with the funciton, useNotes, and exports it for use elsewhere.
 */
-
-import { resetNoteForm } from "./NoteForm.js";
-
 const eventHub = document.querySelector("#container");
 
 // Sets empty array for getNotes to place the parsed data in.
@@ -36,7 +33,6 @@ export const saveNote = note => {
         body: JSON.stringify(note)
     })
         .then(getNotes)
-        .then(resetNoteForm)
         .then(dispatchStateChangeEvent);
 };
 
@@ -67,7 +63,7 @@ export const editNote = (note) => {
 *   deleteNote, and then sets an updated array to render the note list again.
 */
 eventHub.addEventListener("deleteNoteEvent", e => {
-    deleteNote(e.detail.note)
+    deleteNote(e.detail.chosenNoteId)
 });
 
 // Listens for the custom event "editNoteEvent" which invokes the function editNote.

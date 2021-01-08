@@ -17,11 +17,9 @@ export const NotesListButton = () => {
 *   Listens for a "click" event and dispatches the custom event, notesListToggle, to the eventHub
 *   to set the container (#notesListContainer) to empty or to render a list of notes to the DOM.
 */
-targetContentContainer.addEventListener(
-    "click",
-    e => {
-        if (e.target.id === ("button--toggleNotesList")) {
-            const noteListToggleEvent = new CustomEvent("notesListToggle");
-            eventHub.dispatchEvent(noteListToggleEvent);
-        }
-    });
+targetContentContainer.addEventListener("click", e => {
+    if (e.target.id === ("button--toggleNotesList")) {
+        const noteListToggleEvent = new CustomEvent("notesListToggle");
+        eventHub.dispatchEvent(noteListToggleEvent);
+    }
+});

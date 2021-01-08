@@ -4,14 +4,14 @@
 */
 
 const eventHub = document.querySelector("#container");
-const contentTargetContainer = document.querySelector("#notesListContainer");
+const targetContentContainer = document.querySelector("#notesListContainer");
 /*
 *   Exports the function, Note, that accepts two parameters, 
 *   a note object and a criminal object, and returns a string of HTML.
 */
 
-export const Note = (noteObject, criminalObject) => {
-    const [firstName, lastName] = criminalObject.name.split(" ");
+export const Note = (noteObject) => {
+    const [firstName, lastName] = noteObject.name.split(" ");
     return `
     <section class="note" id="note--${noteObject.id}">
         <h4 class="note__suspect"><span class="bold">Suspect</span>: ${lastName}, ${firstName}</h4>
@@ -28,7 +28,7 @@ export const Note = (noteObject, criminalObject) => {
 };
 
 // Listens for a "click" event and hides a corresponding note.
-contentTargetContainer.addEventListener('click', e => {
+targetContentContainer.addEventListener('click', e => {
     if (e.target.id.startsWith('removeNote--')) {
         e.target.parentElement.remove();
     };
@@ -38,12 +38,12 @@ contentTargetContainer.addEventListener('click', e => {
  *  Listens for a "click" event and creates a custom event "deleteNoteEvent",
  *  which sends the note.id as the detail for the event.
 */
-contentTargetContainer.addEventListener("click", e => {
+targetContentContainer.addEventListener("click", e => {
     if (e.target.id.startsWith("deleteNote--")) {
         const [prefix, chosenNoteId] = e.target.id.split("--");
         const deleteNote = new CustomEvent("deleteNoteEvent", {
             detail: {
-                note: chosenNoteId,
+                chosenNoteId
             }
         })
         eventHub.dispatchEvent(deleteNote);
@@ -54,16 +54,14 @@ contentTargetContainer.addEventListener("click", e => {
  *  Listens for a "click" event and dispatches the custom event, editNoteEvent,
  *  to the eventHub to fill the note form with the corresponding note's data.
 */
-contentTargetContainer.addEventListener(
-    "click",
-    e => {
-        if (e.target.id.startsWith("editNote--")) {
-            const [prefix, noteId] = e.target.id.split("--");
-            const editNote = new CustomEvent("editNoteButtonClicked", {
-                detail: {
-                    key: noteId
-                }
-            })
-            eventHub.dispatchEvent(editNote);
-        };
-    });
+targetContentContainer.addEventListener("click", e => {
+    if (e.target.id.startsWith("editNote--")) {
+        const [prefix, chosenNoteId] = e.target.id.split("--");
+        const editNote = new CustomEvent("editNoteButtonClicked", {
+            detail: {
+                chosenNoteId
+            }
+        })
+        eventHub.dispatchEvent(editNote);
+    };
+});

@@ -28,7 +28,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 5rem auto;
+    margin: 0 auto;
 }
 
 #radioDivLabel {
@@ -63,7 +63,7 @@
     background-color: antiquewhite;
 }
 
-.choral {
+.coral {
     background-color: coral;
 }
 
@@ -129,4 +129,29 @@
 
 .skyblue {
     background-color: skyblue;
+}
+
+.colorKey {
+    margin-right: 2rem;
+    position: relative;
+}
+
+.colorKey p {
+    padding-left: 20px;
+}
+
+.colorBox {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    left: 2px;
+    top: 21px;
+}
+
+#listKeyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 5rem 5rem 0 5rem;
 }
